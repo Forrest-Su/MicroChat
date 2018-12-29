@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MicroChat</string>
+
+    <string name="login">登  录</string>
+    <string name="register">注  册</string>
+    <string name="login_out">退出登录</string>
+    <string name="phone_number">手机号码</string>
+    <string name="password">密码</string>
+    <string name="verification_code">验证码</string>
+    <string name="get_verification_code">获取验证码</string>
+    <string name="forgot_password">忘记密码</string>
+
+    <string name="chat">聊天</string>
+    <string name="contacts">联系人</string>
+    <string name="me">我的</string>
+
+    <string name="send">发送</string>
+
+    <string name="delete_conversation">删除该会话</string>
+    <string name="delete_all_conversation">删除所有会话</string>
+    <string name="clear_current_messages">清空当前聊天记录</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
