@@ -32,7 +32,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyAppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
 
                 <!-- Deep Link -->
@@ -70,7 +71,13 @@
             android:name="Bmob_APP_KEY"
             android:value="" />
 
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.CrashActivity">
+            <intent-filter>
+                <action android:name="com.example.forrestsu.microchat.ACTION_START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -76,7 +76,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     public void loginOut() {
         Intent toMain = new Intent(getActivity(), MainActivity.class);
         startActivity(toMain);
-        ActivityManager.finishAll(); //MainActivity没有继承BaseActivity，所以不会被finish
+        ActivityManager.getInstance().finishAll(); //MainActivity没有继承BaseActivity，所以不会被finish
     }
 
     @Override //显示加载状态

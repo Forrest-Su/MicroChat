@@ -10,31 +10,43 @@ import java.util.List;
 提供一系列管理活动的方法
  */
 public class ActivityManager {
+
+    private static ActivityManager instance;
+
+    //单例模式
+    public static ActivityManager getInstance() {
+        if (null == instance) {
+            instance = new ActivityManager();
+        }
+        return instance;
+    }
+
     //创建List用于暂存活动
-    public static List<Activity> activities = new ArrayList<>();
+    private List<Activity> activityList = new ArrayList<>();
 
     //方法：将活动添加到List
-    public static void addActivity(Activity activity) {
-        activities.add(activity);
+    public void addActivity(Activity activity) {
+        activityList.add(activity);
     }
 
     //方法：将活动从List中移除
-    public static void removeActivity(Activity activity) {
-        activities.remove(activity);
+    public void removeActivity(Activity activity) {
+        activityList.remove(activity);
     }
 
     //方法：结束所有活动
-    public static void finishAll() {
-        for (Activity activity : activities) {
+    public void finishAll() {
+        for (Activity activity : activityList) {
             if (!activity.isFinishing()) {
                 activity.finish();
             }
         }
+        activityList.clear();
     }
 
     //结束除指定活动外的所有活动
-    public static void finishAllElse(Activity specifiedActivity) {
-        for (Activity activity : activities) {
+    public void finishAllElse(Activity specifiedActivity) {
+        for (Activity activity : activityList) {
             if (activity != specifiedActivity && !activity.isFinishing()) {
                 activity.finish();
             }

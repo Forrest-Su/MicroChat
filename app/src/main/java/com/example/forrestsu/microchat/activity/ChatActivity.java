@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.example.forrestsu.microchat.base.BaseActivity;
 import com.example.forrestsu.microchat.beans.User;
 import com.example.forrestsu.microchat.presenter.ChatPresenter;
 import com.example.forrestsu.microchat.utils.ChoosePhoto;
+import com.example.forrestsu.microchat.utils.LogUtil;
 import com.example.forrestsu.microchat.utils.PermissionUtil;
 import com.example.forrestsu.microchat.view.ChatView;
 
@@ -70,6 +70,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        LogUtil.d(TAG, "测试");
 
         BmobIMConversation conversationEntrance = (BmobIMConversation) getIntent().getExtras().getSerializable("c");
         bmobIMConversation = BmobIMConversation.obtain(BmobIMClient.getInstance(), conversationEntrance);
@@ -225,9 +227,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,
     @Override //查询消息结果
     public void queryMessagesResult(List<BmobIMMessage> list) {
         if (list != null && list.size() > 0) {
-            for (BmobIMMessage  msg : list) {
-                Log.i(TAG, "queryMessagesResult: 测试" + msg.getContent());
-            }
             chatAdapter.addItemListToHead(list);
             linearLayoutManager.scrollToPositionWithOffset(list.size() - 1, 0);
         }
@@ -237,14 +236,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,
     //接收在线消息
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MessageEvent event) {
-        Log.i(TAG, "onEventMainThread: 接收到");
         addMessage2Chat(event);
     }
 
     //处理离线消息
     @Subscribe
     public void onEventMainThread(OfflineMessageEvent event) {
-        Log.i(TAG, "onEventMainThread: 接收到离线");
         //event.getEventMap().get;
     }
 
@@ -303,12 +300,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener,
             if (e == null) {
                 //发送成功
                 int sendStatus = bmobIMMessage.getSendStatus();
-                Log.i(TAG, "done: 发送状态：" + sendStatus);
             } else {
                 //发送失败
                 int position = chatAdapter.getPosition(bmobIMMessage);
                 int sendStatus = bmobIMMessage.getSendStatus();
-                Log.i(TAG, "done: 发送状态2：" + sendStatus);
             }
         }
     };

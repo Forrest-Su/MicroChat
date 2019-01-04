@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.example.forrestsu.microchat.ActivityManager;
 import com.example.forrestsu.microchat.R;
 import com.example.forrestsu.microchat.beans.User;
 ;
@@ -32,8 +33,14 @@ public class MainActivity extends AppCompatActivity {
 //            finish();
 //        }
 
+        Intent intent = getIntent();
+        boolean isExit = intent.getBooleanExtra("exit", false);
+        if (isExit) {
+            finish();
+        }
+
         final User user = BmobUser.getCurrentUser(User.class);
-        if (!TextUtils.isEmpty(user.getObjectId())) {
+        if (user != null && !TextUtils.isEmpty(user.getObjectId())) {
             Intent toHomeActivity = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(toHomeActivity);
             finish();
@@ -41,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
             Intent toLogin = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(toLogin);
             finish();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra("exit", false);
+            if (isExit) {
+                ActivityManager.getInstance().finishAll();
+                finish();
+            }
         }
     }
 }

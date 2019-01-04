@@ -147,7 +147,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override //注册成功
     public void registerSuccess() {
-        ActivityManager.finishAllElse(this);
+        ActivityManager.getInstance().finishAllElse(this);
         Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();

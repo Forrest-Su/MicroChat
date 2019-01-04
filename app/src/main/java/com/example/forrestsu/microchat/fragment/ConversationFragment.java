@@ -1,9 +1,9 @@
 package com.example.forrestsu.microchat.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;;
 
 import com.example.forrestsu.microchat.R;
@@ -32,6 +32,16 @@ public class ConversationFragment extends BaseFragment implements ConversationVi
     private ConversationAdapter conversationAdapter;
 
     private int clickOption;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(Bundle saveInstanceState) {
+        super.onCreate(saveInstanceState);
+    }
 
     @Override
     public int getContentViewId() {
@@ -97,7 +107,6 @@ public class ConversationFragment extends BaseFragment implements ConversationVi
     @Override
     public void onItemLongClick(int position) {
         clickOption = position;
-        Log.i(TAG, "onItemLongClick: position= " + clickOption);
 //      Conversation conversation = conversationAdapter.getConversation(position);
 //      conversation.onLongClick(getContext());
     }
@@ -145,5 +154,34 @@ public class ConversationFragment extends BaseFragment implements ConversationVi
     public void onEventMainThread(MessageEvent event) {
         //conversationAdapter.addConversationToFirst(new PrivateConversation(event.getConversation()));
         conversationPresenter.getAllConversations();
+    }
+
+
+
+    @Override
+    public void onActivityCreated(Bundle saveInstanceState) {
+        super.onActivityCreated(saveInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

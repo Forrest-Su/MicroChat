@@ -15,15 +15,16 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        //活动被创建时会被添加到list中同一管理
-        ActivityManager.addActivity(this);
+        //活动被创建时会被添加到list中统一管理
+        ActivityManager.getInstance().addActivity(this);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //当活动被销毁时会从list中被移除
-        ActivityManager.removeActivity(this);
+        ActivityManager.getInstance().removeActivity(this);
+        super.onDestroy();
+
     }
 
     @Override

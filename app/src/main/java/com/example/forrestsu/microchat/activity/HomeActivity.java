@@ -18,6 +18,7 @@ import com.example.forrestsu.microchat.event.RefreshEvent;
 import com.example.forrestsu.microchat.presenter.ConnectIMServicePresenter;
 import com.example.forrestsu.microchat.utils.IMMLeaks;
 import com.example.forrestsu.microchat.view.ConnectIMServiceView;
+import com.orhanobut.logger.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,7 +28,6 @@ import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMUserInfo;
 import cn.bmob.newim.core.ConnectionStatus;
 import cn.bmob.newim.event.MessageEvent;
-import cn.bmob.newim.event.OfflineMessageEvent;
 import cn.bmob.newim.listener.ConnectStatusChangeListener;
 import cn.bmob.newim.notification.BmobNotificationManager;
 import cn.bmob.v3.BmobUser;
@@ -54,9 +54,15 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate: 当前连接状态：" + BmobIM.getInstance().getCurrentStatus().getMsg());
+//        Log.i(TAG, "onCreate: 当前连接状态：" + BmobIM.getInstance().getCurrentStatus().getMsg());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Logger.d("测试，全局");
+
+        test();
+
+        //test2();
 
         initView();
         initData();
@@ -67,7 +73,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         BmobIM.getInstance().setOnConnectStatusChangeListener(new ConnectStatusChangeListener() {
             @Override
             public void onChange(ConnectionStatus status) {
-                Log.i(TAG, "onChange:当前连接状态：" + BmobIM.getInstance().getCurrentStatus().getMsg());
+//                Log.i(TAG, "onChange:当前连接状态：" + BmobIM.getInstance().getCurrentStatus().getMsg());
                 EventBus.getDefault().post(new RefreshEvent());
             }
         });
@@ -79,6 +85,11 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         //每次进来应用都检查会话和好友请求的情况
@@ -87,10 +98,14 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         BmobNotificationManager.getInstance(this).cancelNotification();
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -198,7 +213,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
     @Override //连接IM服务器成功
     public void connectIMSuccess() {
-        Log.i(TAG, "connectIMSuccess: 当前连接状态" + BmobIM.getInstance().getCurrentStatus().getMsg());
+//        Log.i(TAG, "connectIMSuccess: 当前连接状态" + BmobIM.getInstance().getCurrentStatus().getMsg());
         final User user = BmobUser.getCurrentUser(User.class);
         BmobIM.getInstance().
                 updateUserInfo(new BmobIMUserInfo(user.getObjectId(),
@@ -221,17 +236,20 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public void onEventMainThread(MessageEvent event) {
         //checkRedPoint();
         BmobIMMessage msg = event.getMessage();
-        Log.i(TAG, "onEventMainThread: 有用户发来消息");
-        Log.i(TAG, "onEventMainThread: id:" + msg.getId());
-        Log.i(TAG, "onEventMainThread: fromId:" + msg.getFromId());
-        Log.i(TAG, "onEventMainThread: toId:" + msg.getToId());
-        Log.i(TAG, "onEventMainThread: content:" + msg.getContent());
-        Log.i(TAG, "onEventMainThread: msgType:" + msg.getMsgType());
-        Log.i(TAG, "onEventMainThread: createTime:" + msg.getCreateTime());
-        Log.i(TAG, "onEventMainThread: updateTime:" + msg.getUpdateTime());
-        Log.i(TAG, "onEventMainThread: id:" + msg.getBmobIMUserInfo().getId());
-        Log.i(TAG, "onEventMainThread: userId:" + msg.getBmobIMUserInfo().getUserId());
-        Log.i(TAG, "onEventMainThread: name:" + msg.getBmobIMUserInfo().getName());
-        Log.i(TAG, "onEventMainThread: avatar:" + msg.getBmobIMUserInfo().getAvatar());
+    }
+
+
+    //Test
+    public void test() {
+        String str = null;
+        str.equals("test");
+    }
+
+    //Test2
+    public void test2() {
+        for (int i = 0; i < 100; i++) {
+            int current = i;
+            Log.i(TAG, "test2: 测试2：" + current);
+        }
     }
 }

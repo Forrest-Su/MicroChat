@@ -1,8 +1,16 @@
 package com.example.forrestsu.microchat;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.forrestsu.microchat.bmob.MyMessageHandler;
+import com.example.forrestsu.microchat.logger.MyDiskLogAdapter;
+import com.example.forrestsu.microchat.utils.AppUtils;
+import com.example.forrestsu.microchat.view.LoginOutView;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,6 +39,30 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i(TAG, "onCreate: 测试，执行oncreate");
+
+        //初始化Logger
+        Logger.addLogAdapter(new AndroidLogAdapter() {
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                return false;
+            }
+        });
+
+
+        if (getExternalCacheDir() != null) {
+            Logger.addLogAdapter(new MyDiskLogAdapter(getExternalCacheDir().getAbsolutePath()) {
+                @Override
+                public boolean isLoggable(int priority, @Nullable String tag) {
+                    return true;
+                }
+            });
+        } else {
+            Logger.addLogAdapter(new DiskLogAdapter());
+        }
+
+        //初始化CrashHandler
+        CrashHandler.getInstance().init(this);
 
         initBmob();
     }
@@ -63,5 +95,4 @@ public class MyApplication extends Application {
             return null;
         }
     }
-
 }

@@ -9,14 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.forrestsu.microchat.utils.LogUtil;
+
 public abstract class BaseFragment extends Fragment implements BaseView {
 
-public abstract int getContentViewId();
+    private static final String TAG = "BaseFragment";
 
-protected abstract void initAllMembersView(Bundle saveInstanceState);
+    public abstract int getContentViewId();
+    protected abstract void initAllMembersView(Bundle saveInstanceState);
 
-protected Context mContext;
-protected View mRootView;
+    protected Context mContext;
+    protected View mRootView;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState ) {
         mRootView = inflater.inflate(getContentViewId(), container, false);
@@ -68,4 +72,6 @@ protected View mRootView;
             super("Fragment has disconnected from Activity ! - -.");
         }
     }
+
+
 }

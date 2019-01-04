@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void loginSuccess() {
-        ActivityManager.finishAllElse(this);
+        ActivityManager.getInstance().finishAllElse(this);
         Intent toHome = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(toHome);
         finish();
