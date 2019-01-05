@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.forrestsu.microchat"
@@ -9,17 +11,37 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "1"
     }
+
+    productFlavors {
+        qihoo {
+            applicationId "com.example.forrestsu.microchat.qihoo"
+        }
+        baidu {
+            applicationId "com.example.forrestsu.microchat.baidu"
+        }
+    }
+    signingConfigs {
+        config {
+            storeFile file(KEY_PATH)
+            storePassword KEY_PASS
+            keyAlias ALIAS_NAME
+            keyPassword ALIAS_PASS
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:28.0.0'
@@ -34,12 +56,11 @@ dependencies {
     implementation 'jp.co.cyberagent.android:gpuimage:2.0.3'
     //EventBus
     implementation 'org.greenrobot:eventbus:3.0.0'
-
     //Bmob
     implementation 'cn.bmob.android:bmob-sdk:3.6.7'
     //特定版本的bmob-im依赖特定版本的bmob-sdk
     implementation 'cn.bmob.android:bmob-im:2.1.1@aar'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     //implementation 'com.squareup.okio:okio:2.1.0'
     //implementation 'com.google.code.gson:gson:2.8.5'

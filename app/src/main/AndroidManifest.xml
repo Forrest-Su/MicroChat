@@ -69,7 +69,7 @@
         <!-- 配置Bmob平台的应用密钥 -->
         <meta-data
             android:name="Bmob_APP_KEY"
-            android:value="" />
+            android:value="959fb03388c65bd09c3c05049385935b" />
 
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.CrashActivity">
